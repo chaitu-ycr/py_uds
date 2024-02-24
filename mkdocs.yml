@@ -1,10 +1,10 @@
-site_name: py_uds
-site_url: https://chaitu-ycr.github.io/py_uds/
-site_description: Python UDS package
+site_name: py_uds_lib
+site_url: https://chaitu-ycr.github.io/py_uds_lib/
+site_description: Python UDS Library
 site_author: chaitu-ycr
 
-repo_name: chaitu-ycr/py_uds
-repo_url: https://github.com/chaitu-ycr/py_uds.git
+repo_name: chaitu-ycr/py_uds_lib
+repo_url: https://github.com/chaitu-ycr/py_uds_lib.git
 edit_uri: blob/main/docs/
 
 nav:
@@ -17,11 +17,11 @@ theme:
   - toc.integrate
 
 plugins:
-  - mkdocstrings:
-      handlers:
-        python:
-          options:
-            docstring_style: google
-            show_source: false
-            merge_init_into_class: true
-  - search
+- mkdocstrings:
+    handlers:
+      python:
+        options:
+          docstring_style: google
+          show_source: false
+          merge_init_into_class: true
+- search

@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "py_uds"
+name = "py_uds_lib"
 version = "0.0.1"
-description = "Python UDS package"
+description = "Python UDS Library"
 authors = ["chaitu-ycr <chaitu.ycr@gmail.com>"]
 license = "LICENSE"
 readme = "README.md"
-homepage = "https://github.com/chaitu-ycr/py_uds.git"
-repository = "https://github.com/chaitu-ycr/py_uds.git"
-documentation = "https://chaitu-ycr.github.io/py_uds/"
+homepage = "https://github.com/chaitu-ycr/py_uds_lib.git"
+repository = "https://github.com/chaitu-ycr/py_uds_lib.git"
+documentation = "https://chaitu-ycr.github.io/py_uds_lib/"
 keywords = ["python", "UDS", "diagnostics"]
 classifiers = [
     "Programming Language :: Python :: 3.9",
@@ -16,7 +16,7 @@ classifiers = [
     "Topic :: Software Development :: Embedded Systems"
 ]
 packages = [
-    { include = "py_uds.py", from = "src" },
+    { include = "py_uds_lib.py", from = "src" },
 ]
 
 [tool.poetry.dependencies]
