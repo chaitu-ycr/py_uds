@@ -1,4 +1,4 @@
-class MyClass:
+class PyUds:
     def __init__(self) -> None:
         print("message from my class init.")
 

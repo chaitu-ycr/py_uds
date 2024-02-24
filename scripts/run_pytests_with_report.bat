@@ -1,6 +1,6 @@
 @echo off
 
-title "running pytest"
+title "running pytest-html"
 
 set origin_dir=%CD%
 set file_dir=%~dp0
@@ -17,7 +17,7 @@ call %cmd_venv_activate%
 if %ERRORLEVEL% NEQ 0 (GOTO ERROR)
 
 :START_PYTESTS
-pytest
+pytest tests/ --html=tests/report/full_test_report.html --self-contained-html -rA --verbose
 if %ERRORLEVEL% NEQ 0 (GOTO ERROR)
 
 :END

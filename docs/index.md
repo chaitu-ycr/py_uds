@@ -1,3 +1,3 @@
-# [my_package](https://github.com/chaitu-ycr/py_proj_template.git)
+# [py_uds](https://github.com/chaitu-ycr/py_uds.git)
 
 Python Package Template repository

@@ -1,8 +1,5 @@
-# py_proj_template
+# py_uds
 
-My Python 🐍 projects template. MKDocs is used for documentation.
+Python UDS package
 
-## Acknowledgements
-
-I want to thank plants 🎋 for providing me oxygen each day.
-Also, I want to thank the sun 🌄 for providing more than half of their nourishment free of charge.
+**NOTE: this package not yet ready to use. implementation in progress.
