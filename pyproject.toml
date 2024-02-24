@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "py_uds_lib"
-version = "0.0.2"
+version = "0.0.3"
 description = "Python UDS Library"
 authors = ["chaitu-ycr <chaitu.ycr@gmail.com>"]
 license = "LICENSE"
@@ -16,21 +16,23 @@ classifiers = [
     "Topic :: Software Development :: Embedded Systems"
 ]
 packages = [
-    { include = "*py_uds*.py", from = "src" },
+    { include = "py_uds*.py", from = "src" },
     { include = "py_uds_lib_utils/*.py", from = "src"},
 ]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-pytest-html = "^4.1.1"
 dash = "^2.15.0"
-allure-pytest = "^2.13.2"
 faker = "^23.2.1"
 pandas = "^2.2.1"
+cantools = "^39.4.4"
+odxtools = "^6.6.1"
 
 [tool.poetry.group.dev.dependencies]
-mkdocstrings-python = "^1.7.5"
 pytest = "^7.4.3"
+allure-pytest = "^2.13.2"
+pytest-html = "^4.1.1"
+mkdocstrings-python = "^1.7.5"
 
 [build-system]
 requires = ["poetry-core"]
