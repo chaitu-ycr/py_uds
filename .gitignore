@@ -132,3 +132,4 @@ dmypy.json
 .temp
 poetry.lock
 .vscode
+tests/.report
