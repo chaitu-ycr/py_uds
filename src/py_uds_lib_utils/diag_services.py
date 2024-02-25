@@ -213,20 +213,21 @@ class Sfid:
         self.STPR = 0x02
         self.request_routine_result = 0x03
         self.RRR = 0x03
-        
+
 
 class Services:
     def __init__(self) -> None:
         pass
-    
+
     @property
     def sid(self):
         return Sid()
-    
+
     @property
     def sfid(self):
         return Sfid()
-    
+
+    # Diagnostic and communication management
     def diagnostic_session_control(self, diagnostic_session_type: int) -> str:
         """service is used to enable different diagnostic sessions in the server(s).
         Check ISO 14229 doc for more information about service.
@@ -239,7 +240,7 @@ class Services:
         """
         request = f'{self.sid.DSC:02X} {diagnostic_session_type:02X}'
         return request
-    
+
     def ecu_reset(self, reset_type: int) -> str:
         """The ECUReset service is used by the client to request a server reset.
         Check ISO 14229 doc for more information about service.
@@ -252,7 +253,7 @@ class Services:
         """
         request = f'{self.sid.ER:02X} {reset_type:02X}'
         return request
-    
+
     def security_access(self, security_access_type: int, security_access_data_record: None | list[int] = None) -> str:
         """this service provide a means to access data and/or diagnostic services, which have restricted access for security, emissions, or safety reasons.
         Check ISO 14229 doc for more information about service.
@@ -268,7 +269,7 @@ class Services:
         if security_access_data_record is not None:
             request = f'{request} {" ".join([f"{value & 0xFF:02x}" for value in security_access_data_record])}'
         return request
-    
+
     def communication_control(self, control_type: int, communication_type: int, node_identification_number: None | int = None) -> str:
         """service used to switch on/off the transmission and/or the reception of certain messages.
         Check ISO 14229 doc for more information about service.
@@ -285,9 +286,9 @@ class Services:
         if node_identification_number is not None:
             request = f'{request} {(node_identification_number & 0xFF00) > 8:02X} {node_identification_number & 0xFF}'
         return request
-    
+
     def tester_present(self, zero_sub_functions: int) -> str:
-        """This service is used to indicate to a server (or servers) that a client is still connected to the vehicle and that 
+        """This service is used to indicate to a server (or servers) that a client is still connected to the vehicle and that
         certain diagnostic services and/or communication that have been previously activated are to remain active.
         Check ISO 14229 doc for more information about service.
 
@@ -299,7 +300,7 @@ class Services:
         """
         request = f'{self.sid.TP:02X} {zero_sub_functions & 0xFF:02X}'
         return request
-    
+
     def access_timing_parameter(self, timing_parameter_access_type: int, timing_parameter_request_record: None | list[int] = None) -> str:
         """service is used to read and change the default timing parameters of a communication link for the duration this communication link is active.
         Check ISO 14229 doc for more information about service.
@@ -315,7 +316,7 @@ class Services:
         if timing_parameter_request_record is not None:
             request = f'{request} {" ".join([f"{value & 0xFF:02x}" for value in timing_parameter_request_record])}'
         return request
-    
+
     def secured_data_transmission(self, security_data_request_record: list[int]) -> str:
         """service to transmit data that is protected against attacks from third parties - which could endanger data security.
         Check ISO 14229 doc for more information about service.
@@ -328,7 +329,7 @@ class Services:
         """
         request = f'{self.sid.SDT:02X} {" ".join([f"{value & 0xFF:02x}" for value in security_data_request_record])}'
         return request
-    
+
     def control_dtc_setting(self, dtc_setting_type: int, dtc_setting_control_option_record: None | list[int] = None) -> str:
         """service used by a client to stop or resume the updating of DTC status bits in the server.
         Check ISO 14229 doc for more information about service.
@@ -344,7 +345,7 @@ class Services:
         if dtc_setting_control_option_record is not None:
             request = f'{request} {" ".join([f"{value & 0xFF:02x}" for value in dtc_setting_control_option_record])}'
         return request
-    
+
     def response_on_event(self, event_type: int, event_window_time: int, event_type_record: None | list[int] = None, service_to_respond_to_record: None | list[int] = None) -> str:
         """service requests a server to start or stop transmission of responses on a specified event.
         Check ISO 14229 doc for more information about service.
@@ -364,7 +365,7 @@ class Services:
         if service_to_respond_to_record is not None:
             request = f'{request} {" ".join([f"{value & 0xFF:02x}" for value in service_to_respond_to_record])}'
         return request
-    
+
     def link_control(self, link_control_type: int, link_control_mode_identifier: int | None = None, link_record: int | None = None) -> str:
         """service is used to control the communication between the client and the server in order to gain bus bandwidth for diagnostic purposes.
         Check ISO 14229 doc for more information about service.
@@ -383,4 +384,9 @@ class Services:
         if link_record is not None:
             request = f'{request} {(link_record & 0xFF0000) > 16:02X} {(link_record & 0xFF0000) > 8:02X} {link_record & 0xFF}'
         return request
-    
+
+    # Data transmission
+    # Stored data transmission
+    # Input Output control
+    # Remote activation of routine
+    # Upload download
