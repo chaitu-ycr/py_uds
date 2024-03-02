@@ -63,6 +63,8 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.access_timing_parameter">access_timing_parameter</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.clear_diagnostic_information">clear_diagnostic_information</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.communication_control">communication_control</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.control_dtc_setting">control_dtc_setting</a>
@@ -73,23 +75,39 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.ecu_reset">ecu_reset</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.input_output_control_by_identifier">input_output_control_by_identifier</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.link_control">link_control</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.read_data_by_identifier">read_data_by_identifier</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.read_data_by_periodic_identifier">read_data_by_periodic_identifier</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.read_dtc_information">read_dtc_information</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.read_memory_by_address">read_memory_by_address</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.read_scaling_data_by_identifier">read_scaling_data_by_identifier</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.request_download">request_download</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.request_file_transfer">request_file_transfer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.request_transfer_exit">request_transfer_exit</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.request_upload">request_upload</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.response_on_event">response_on_event</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.routine_control">routine_control</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.secured_data_transmission">secured_data_transmission</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.security_access">security_access</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.tester_present">tester_present</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.transfer_data">transfer_data</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#src.py_uds_lib_utils.diag_services.Services.write_data_by_identifier">write_data_by_identifier</a>
     </li>
@@ -322,6 +340,75 @@ Check ISO 14229 doc for more information about service.</p>
               –
               <div class="doc-md-description">
                 <p>parameter record contains the timing parameter values to be set in the server. Defaults to None.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>(                <code>str</code>
+)            –
+            <div class="doc-md-description">
+              <p>complete request in string of bytes with space between each byte.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="src.py_uds_lib_utils.diag_services.Services.clear_diagnostic_information" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">clear_diagnostic_information</span><span class="p">(</span><span class="n">group_of_dtc</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>service is used by the client to clear diagnostic information in one or multiple servers memory.
+Check ISO 14229 doc for more information about service.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>group_of_dtc</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>parameter contains a 3-byte value indicating the group of DTCs (e.g., Powertrain, Body, Chassis) or the particular DTC to be cleared.</p>
               </div>
             </li>
         </ul>
@@ -743,6 +830,93 @@ Check ISO 14229 doc for more information about service.</p>
 
 
 
+<h3 id="src.py_uds_lib_utils.diag_services.Services.input_output_control_by_identifier" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">input_output_control_by_identifier</span><span class="p">(</span><span class="n">data_identifier</span><span class="p">,</span> <span class="n">control_option_record</span><span class="p">,</span> <span class="n">control_enable_mask_record</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>service is used by the client to substitute a value for an input signal, internal server function and/or force control to a value for an output (actuator) of an electronic system.
+Check ISO 14229 doc for more information about service.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>data_identifier</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>parameter identifies an server local input signal(s), internal parameter(s) and/or output signal(s).</p>
+              </div>
+            </li>
+            <li>
+              <b><code>control_option_record</code></b>
+                  (<code>list[int]</code>)
+              –
+              <div class="doc-md-description">
+                <p>one or multiple bytes (inputOutputControlParameter and controlState 1 to controlState m).</p>
+              </div>
+            </li>
+            <li>
+              <b><code>control_enable_mask_record</code></b>
+                  (<code>list[int] | None</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>one or multiple bytes (controlMask 1 to controlMask r). Defaults to None.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>(                <code>str</code>
+)            –
+            <div class="doc-md-description">
+              <p>complete request in string of bytes with space between each byte.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
 <h3 id="src.py_uds_lib_utils.diag_services.Services.link_control" class="doc doc-heading">
           <code class="highlight language-python"><span class="n">link_control</span><span class="p">(</span><span class="n">link_control_type</span><span class="p">,</span> <span class="n">link_control_mode_identifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">link_record</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
@@ -978,6 +1152,83 @@ Check ISO 14229 doc for more information about service.</p>
 
 
 
+<h3 id="src.py_uds_lib_utils.diag_services.Services.read_dtc_information" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">read_dtc_information</span><span class="p">(</span><span class="n">report_type</span><span class="p">,</span> <span class="n">remaining_arguments_list</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>service allows a client to read the status of server resident Diagnostic Trouble Code (DTC) information from any server, or group of servers within a vehicle.
+Check ISO 14229 doc for more information about service.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>report_type</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>type of DTC's that we need to retrieve from ECU.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>remaining_arguments_list</code></b>
+                  (<code>list[int]</code>)
+              –
+              <div class="doc-md-description">
+                <p>list of remaining arguments needed for type of DTC's to be fetched.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>(                <code>str</code>
+)            –
+            <div class="doc-md-description">
+              <p>complete request in string of bytes with space between each byte.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
 <h3 id="src.py_uds_lib_utils.diag_services.Services.read_memory_by_address" class="doc doc-heading">
           <code class="highlight language-python"><span class="n">read_memory_by_address</span><span class="p">(</span><span class="n">address_and_length_format_identifier</span><span class="p">,</span> <span class="n">memory_address</span><span class="p">,</span> <span class="n">memory_size</span><span class="p">)</span></code>
 
@@ -1132,6 +1383,388 @@ Check ISO 14229 doc for more information about service.</p>
 
 
 
+<h3 id="src.py_uds_lib_utils.diag_services.Services.request_download" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">request_download</span><span class="p">(</span><span class="n">data_format_identifier</span><span class="p">,</span> <span class="n">address_and_length_format_identifier</span><span class="p">,</span> <span class="n">memory_address</span><span class="p">,</span> <span class="n">memory_size</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>service is used by the client to initiate a data transfer from the client to the server.
+Check ISO 14229 doc for more information about service.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>data_format_identifier</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>one byte value with each nibble encoded separately. The high nibble specifies the "compressionMethod", and the low nibble specifies the "encryptingMethod".</p>
+              </div>
+            </li>
+            <li>
+              <b><code>address_and_length_format_identifier</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>parameter is a one byte value with each nibble encoded separately. bit 7 - 4: Length of the memorySize parameter. bit 3 - 0: Length of the memoryAddress parameter.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>memory_address</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>starting address of the server memory where the data is to be written to.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>memory_size</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>parameter shall be used by the server to compare the memory size with the total amount of data transferred during the TransferData service.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>(                <code>str</code>
+)            –
+            <div class="doc-md-description">
+              <p>complete request in string of bytes with space between each byte.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="src.py_uds_lib_utils.diag_services.Services.request_file_transfer" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">request_file_transfer</span><span class="p">(</span><span class="n">mode_of_operation</span><span class="p">,</span> <span class="n">file_path_and_name_length</span><span class="p">,</span> <span class="n">file_path_and_name</span><span class="p">,</span> <span class="n">data_format_identifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">file_size_parameter_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">file_size_uncompressed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">file_size_compressed</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>service is used by the client to initiate a file data transfer from either the client to the server or from the server to the client (download or upload).
+Check ISO 14229 doc for more information about service.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>mode_of_operation</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>This data-parameter defines the type of operation to be applied to the file or directory indicated in the filePathAndName parameter.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>file_path_and_name_length</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>length in byte for the parameter filePath.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>file_path_and_name</code></b>
+                  (<code>list[int]</code>)
+              –
+              <div class="doc-md-description">
+                <p>Defines the file system location of the server where the file which shall be added, deleted, replaced or read from depending on the parameter modeOfOperation parameter.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>data_format_identifier</code></b>
+                  (<code>int | None</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>This data-parameter is a one byte value with each nibble encoded separately.. Defaults to None.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>file_size_parameter_length</code></b>
+                  (<code>int | None</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Defines the length in bytes for both parameters fileSizeUncompressed and fileSizeCompressed. Defaults to None.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>file_size_uncompressed</code></b>
+                  (<code>list[int] | None</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Defines the size of the uncompressed file in bytes. Defaults to None.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>file_size_compressed</code></b>
+                  (<code>list[int] | None</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Defines the size of the compressed file in bytes. Defaults to None.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>(                <code>str</code>
+)            –
+            <div class="doc-md-description">
+              <p>complete request in string of bytes with space between each byte.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="src.py_uds_lib_utils.diag_services.Services.request_transfer_exit" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">request_transfer_exit</span><span class="p">(</span><span class="n">transfer_request_parameter_record</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>service is used by the client to terminate a data transfer between client and server (upload or download).
+Check ISO 14229 doc for more information about service.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>transfer_request_parameter_record</code></b>
+                  (<code>list[int] | None</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>parameter record contains parameter(s), which are required by the server to support the transfer of data. Defaults to None.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>(                <code>str</code>
+)            –
+            <div class="doc-md-description">
+              <p>complete request in string of bytes with space between each byte.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="src.py_uds_lib_utils.diag_services.Services.request_upload" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">request_upload</span><span class="p">(</span><span class="n">data_format_identifier</span><span class="p">,</span> <span class="n">address_and_length_format_identifier</span><span class="p">,</span> <span class="n">memory_address</span><span class="p">,</span> <span class="n">memory_size</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>service is used by the client to initiate a data transfer from the server to the client.
+Check ISO 14229 doc for more information about service.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>data_format_identifier</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>one byte value with each nibble encoded separately. The high nibble specifies the "compressionMethod", and the low nibble specifies the "encryptingMethod".</p>
+              </div>
+            </li>
+            <li>
+              <b><code>address_and_length_format_identifier</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>parameter is a one byte value with each nibble encoded separately. bit 7 - 4: Length of the memorySize parameter. bit 3 - 0: Length of the memoryAddress parameter.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>memory_address</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>starting address of server memory from which data is to be retrieved.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>memory_size</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>parameter shall be used by the server to compare the memory size with the total amount of data transferred during the TransferData service.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>(                <code>str</code>
+)            –
+            <div class="doc-md-description">
+              <p>complete request in string of bytes with space between each byte.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
 <h3 id="src.py_uds_lib_utils.diag_services.Services.response_on_event" class="doc doc-heading">
           <code class="highlight language-python"><span class="n">response_on_event</span><span class="p">(</span><span class="n">event_type</span><span class="p">,</span> <span class="n">event_window_time</span><span class="p">,</span> <span class="n">event_type_record</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">service_to_respond_to_record</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
@@ -1189,6 +1822,93 @@ Check ISO 14229 doc for more information about service.</p>
               –
               <div class="doc-md-description">
                 <p>parameter record contains the service parameters of the service to be executed in the server each time the specified event defined in the eventTypeRecord occurs. Defaults to None.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>(                <code>str</code>
+)            –
+            <div class="doc-md-description">
+              <p>complete request in string of bytes with space between each byte.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="src.py_uds_lib_utils.diag_services.Services.routine_control" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">routine_control</span><span class="p">(</span><span class="n">routine_control_type</span><span class="p">,</span> <span class="n">routine_identifier</span><span class="p">,</span> <span class="n">routine_control_option_record</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>service is used by the client to execute a defined sequence of steps and obtain any relevant results.
+Check ISO 14229 doc for more information about service.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>routine_control_type</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>1 byte parameter used by this service to select the control of the routine.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>routine_identifier</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>parameter identifies a server local routine and is out of the range of defined dataIdentifiers.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>routine_control_option_record</code></b>
+                  (<code>list[int] | None</code>, default:
+                      <code>None</code>
+)
+              –
+              <div class="doc-md-description">
+                <p>Routine entry/exit option parameters. Defaults to None.</p>
               </div>
             </li>
         </ul>
@@ -1447,6 +2167,83 @@ Check ISO 14229 doc for more information about service.</p>
 
 
 
+<h3 id="src.py_uds_lib_utils.diag_services.Services.transfer_data" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">transfer_data</span><span class="p">(</span><span class="n">block_sequence_counter</span><span class="p">,</span> <span class="n">transfer_request_parameter_record</span><span class="p">)</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>service is used by the client to transfer data either from the client to the server (download) or from the server to the client (upload).
+Check ISO 14229 doc for more information about service.</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>block_sequence_counter</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>parameter value starts at 0x01 with the first TransferData request that follows the RequestDownload (0x34) or RequestUpload (0x35) service.</p>
+              </div>
+            </li>
+            <li>
+              <b><code>transfer_request_parameter_record</code></b>
+                  (<code>list[int] | None</code>)
+              –
+              <div class="doc-md-description">
+                <p>parameter record contains parameter(s) which are required by the server to support the transfer of data. Defaults to None.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>str</code></b>(                <code>str</code>
+)            –
+            <div class="doc-md-description">
+              <p>complete request in string of bytes with space between each byte.</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
 <h3 id="src.py_uds_lib_utils.diag_services.Services.write_data_by_identifier" class="doc doc-heading">
           <code class="highlight language-python"><span class="n">write_data_by_identifier</span><span class="p">(</span><span class="n">data_identifier</span><span class="p">,</span> <span class="n">data_record</span><span class="p">)</span></code>
 
@@ -1532,7 +2329,8 @@ Check ISO 14229 doc for more information about service.</p>
 
   <div class="doc doc-contents ">
   
-      <p><em>summary</em></p>
+      <p>service allows the client to write information into the server at one or more contiguous memory locations.
+Check ISO 14229 doc for more information about service.</p>
 
 
 
