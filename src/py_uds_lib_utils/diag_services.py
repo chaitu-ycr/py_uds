@@ -305,7 +305,7 @@ class Services:
         Returns:
             str: complete request in string of bytes with space between each byte.
         """
-        request = f'{self.sid.RDBI} {" ".join([f"{(value & 0xFF00) >> 8:02X} {value & 0xFF}" for value in data_identifier])}'
+        request = f'{self.sid.RDBI:02X} {" ".join([f"{(value & 0xFF00) >> 8:02X} {value & 0xFF}" for value in data_identifier])}'
         return request
 
     def read_memory_by_address(self, address_and_length_format_identifier: int, memory_address: int, memory_size: int) -> str:
@@ -320,7 +320,7 @@ class Services:
         Returns:
             str: complete request in string of bytes with space between each byte.
         """
-        request = f'{self.sid.RMBA} {address_and_length_format_identifier & 0xFF}'
+        request = f'{self.sid.RMBA:02X} {address_and_length_format_identifier & 0xFF}'
         length_of_memory_address = address_and_length_format_identifier & 0xF
         length_of_memory_size = (address_and_length_format_identifier & 0xF0) >> 4
         request = f'{request} {" ".join([f"{(memory_address >> (i * 8)) & 0xFF:02X}" for i in reversed(range(length_of_memory_address))])}'
@@ -337,7 +337,7 @@ class Services:
         Returns:
             str: complete request in string of bytes with space between each byte.
         """
-        request = f'{self.sid.RSDBI} {(data_identifier & 0xFF00) >> 8:02X} {data_identifier & 0xFF:02X}'
+        request = f'{self.sid.RSDBI:02X} {(data_identifier & 0xFF00) >> 8:02X} {data_identifier & 0xFF:02X}'
         return request
 
     def read_data_by_periodic_identifier(self, transmission_mode: int, periodic_data_identifier: list[int]) -> str:
@@ -351,7 +351,7 @@ class Services:
         Returns:
             str: complete request in string of bytes with space between each byte.
         """
-        request = f'{self.sid.RDBPI} {transmission_mode:02X}'
+        request = f'{self.sid.RDBPI:02X} {transmission_mode:02X}'
         request = f'{request} {" ".join([f"{value & 0xFF:02X}" for value in periodic_data_identifier])}'
         return request
 
@@ -366,7 +366,7 @@ class Services:
         Returns:
             str: complete request in string of bytes with space between each byte.
         """
-        request = f'{self.sid.DDDI} {definition_type:02X}'
+        request = f'{self.sid.DDDI:02X} {definition_type:02X}'
         if definition_type == 0x01:
             for params in supporting_params:
                 dynamically_defined_data_identifier = f'{params[0] >> 8 & 0xFF:02X} {params[0] & 0xFF:02X}'
@@ -401,12 +401,14 @@ class Services:
         Returns:
             str: complete request in string of bytes with space between each byte.
         """
-        request = f'{self.sid.WDBI} {data_identifier >> 8 & 0xFF:02X} {data_identifier & 0xFF:02X}'
-        request = f'{request} {" ".join([f"{value & 0xFF:02X}" for value in data_record])}'
+        data_identifier = self.convert_int_to_str_of_bytes(data_identifier)
+        data_record = " ".join([f"{value & 0xFF:02X}" for value in data_record])
+        request = f'{self.sid.WDBI:02X} {data_identifier} {data_record}'
         return request
 
     def write_memory_by_address(self, address_and_length_format_identifier: int, memory_address: int, memory_size: int, data_record: list[int]) -> str:
-        """_summary_
+        """service allows the client to write information into the server at one or more contiguous memory locations.
+        Check ISO 14229 doc for more information about service.
 
         Args:
             address_and_length_format_identifier (int): parameter is a one byte value with each nibble encoded separately. check UDS ISO for more info.
@@ -417,15 +419,184 @@ class Services:
         Returns:
             str: complete request in string of bytes with space between each byte.
         """
-        request = f'{self.sid.WMBA} {address_and_length_format_identifier & 0xFF}'
-        length_of_memory_address = address_and_length_format_identifier & 0xF
-        length_of_memory_size = (address_and_length_format_identifier & 0xF0) >> 4
-        request = f'{request} {" ".join([f"{(memory_address >> (i * 8)) & 0xFF:02X}" for i in reversed(range(length_of_memory_address))])}'
-        request = f'{request} {" ".join([f"{(memory_size >> (i * 8)) & 0xFF:02X}" for i in reversed(range(length_of_memory_size))])}'
-        request = f'{request} {" ".join([f"{value & 0xFF:02X}" for value in data_record])}'
+        address_and_length_format_identifier = self.convert_int_to_str_of_bytes(address_and_length_format_identifier)
+        memory_address = self.convert_int_to_str_of_bytes(memory_address)
+        memory_size = self.convert_int_to_str_of_bytes(memory_size)
+        data_record = " ".join([f"{value & 0xFF:02X}" for value in data_record])
+        request = f'{self.sid.WMBA:02X} {address_and_length_format_identifier} {memory_address} {memory_size} {data_record}'
         return request
     
     # Stored data transmission
+    def clear_diagnostic_information(self, group_of_dtc: int) -> str:
+        """service is used by the client to clear diagnostic information in one or multiple servers memory.
+        Check ISO 14229 doc for more information about service.
+
+        Args:
+            group_of_dtc (int): parameter contains a 3-byte value indicating the group of DTCs (e.g., Powertrain, Body, Chassis) or the particular DTC to be cleared.
+
+        Returns:
+            str: complete request in string of bytes with space between each byte.
+        """
+        group_of_dtc = self.convert_int_to_str_of_bytes(group_of_dtc)
+        request = f'{self.sid.CDTCI:02X} {group_of_dtc}'
+        return request
+    
+    def read_dtc_information(self, report_type: int, remaining_arguments_list: list[int]) -> str:
+        """service allows a client to read the status of server resident Diagnostic Trouble Code (DTC) information from any server, or group of servers within a vehicle.
+        Check ISO 14229 doc for more information about service.
+
+        Args:
+            report_type (int): type of DTC's that we need to retrieve from ECU.
+            remaining_arguments_list (list[int]): list of remaining arguments needed for type of DTC's to be fetched.
+
+        Returns:
+            str: complete request in string of bytes with space between each byte.
+        """
+        report_type = self.convert_int_to_str_of_bytes(report_type)
+        remaining_arguments_list = " ".join([f"{value & 0xFF:02X}" for value in remaining_arguments_list])
+        request = f'{self.sid.RDTCI:02X} {report_type} {remaining_arguments_list}'
+        return request
+    
     # Input Output control
+    def input_output_control_by_identifier(self, data_identifier: int, control_option_record: list[int], control_enable_mask_record: list[int] | None = None) -> str:
+        """service is used by the client to substitute a value for an input signal, internal server function and/or force control to a value for an output (actuator) of an electronic system.
+        Check ISO 14229 doc for more information about service.
+
+        Args:
+            data_identifier (int): parameter identifies an server local input signal(s), internal parameter(s) and/or output signal(s).
+            control_option_record (list[int]): one or multiple bytes (inputOutputControlParameter and controlState 1 to controlState m).
+            control_enable_mask_record (list[int] | None, optional): one or multiple bytes (controlMask 1 to controlMask r). Defaults to None.
+
+        Returns:
+            str: complete request in string of bytes with space between each byte.
+        """
+        data_identifier = self.convert_int_to_str_of_bytes(data_identifier)
+        control_option_record = f'{" ".join([f"{value & 0xFF:02X}" for value in control_option_record])}'
+        control_enable_mask_record = '' if control_enable_mask_record is None else f'{" ".join([f"{value & 0xFF:02X}" for value in control_enable_mask_record])}'
+        request = f'{self.sid.IOCBI:02X} {data_identifier} {control_option_record} {control_enable_mask_record}'
+        return request
+    
     # Remote activation of routine
+    def routine_control(self, routine_control_type: int, routine_identifier: int, routine_control_option_record: list[int] | None = None) -> str:
+        """service is used by the client to execute a defined sequence of steps and obtain any relevant results.
+        Check ISO 14229 doc for more information about service.
+
+        Args:
+            routine_control_type (int): 1 byte parameter used by this service to select the control of the routine.
+            routine_identifier (int): parameter identifies a server local routine and is out of the range of defined dataIdentifiers.
+            routine_control_option_record (list[int] | None, optional): Routine entry/exit option parameters. Defaults to None.
+
+        Returns:
+            str: complete request in string of bytes with space between each byte.
+        """
+        routine_control_type = self.convert_int_to_str_of_bytes(routine_control_type)
+        routine_identifier = self.convert_int_to_str_of_bytes(routine_identifier)
+        routine_control_option_record = '' if routine_control_option_record is None else f'{" ".join([f"{value & 0xFF:02X}" for value in routine_control_option_record])}'
+        request = f'{self.sid.RC:02X} {routine_control_type} {routine_identifier} {routine_control_option_record}'
+        return request
+    
     # Upload download
+    def request_download(self, data_format_identifier: int, address_and_length_format_identifier: int, memory_address: int, memory_size: int) -> str:
+        """service is used by the client to initiate a data transfer from the client to the server.
+        Check ISO 14229 doc for more information about service.
+
+        Args:
+            data_format_identifier (int): one byte value with each nibble encoded separately. The high nibble specifies the "compressionMethod", and the low nibble specifies the "encryptingMethod".
+            address_and_length_format_identifier (int): parameter is a one byte value with each nibble encoded separately. bit 7 - 4: Length of the memorySize parameter. bit 3 - 0: Length of the memoryAddress parameter.
+            memory_address (int): starting address of the server memory where the data is to be written to.
+            memory_size (int): parameter shall be used by the server to compare the memory size with the total amount of data transferred during the TransferData service.
+
+        Returns:
+            str: complete request in string of bytes with space between each byte.
+        """
+        data_format_identifier = f'{data_format_identifier & 0xFF:02X}'
+        address_and_length_format_identifier = f'{address_and_length_format_identifier & 0xFF:02X}'
+        memory_address = self.convert_int_to_str_of_bytes(memory_address)
+        memory_size = self.convert_int_to_str_of_bytes(memory_size)
+        request = f'{self.sid.RD:02X} {data_format_identifier} {address_and_length_format_identifier} {memory_address} {memory_size}'
+        return request
+    
+    def request_upload(self, data_format_identifier: int, address_and_length_format_identifier: int, memory_address: int, memory_size: int) -> str:
+        """service is used by the client to initiate a data transfer from the server to the client.
+        Check ISO 14229 doc for more information about service.
+
+        Args:
+            data_format_identifier (int): one byte value with each nibble encoded separately. The high nibble specifies the "compressionMethod", and the low nibble specifies the "encryptingMethod".
+            address_and_length_format_identifier (int): parameter is a one byte value with each nibble encoded separately. bit 7 - 4: Length of the memorySize parameter. bit 3 - 0: Length of the memoryAddress parameter.
+            memory_address (int): starting address of server memory from which data is to be retrieved.
+            memory_size (int): parameter shall be used by the server to compare the memory size with the total amount of data transferred during the TransferData service.
+
+        Returns:
+            str: complete request in string of bytes with space between each byte.
+        """
+        data_format_identifier = self.convert_int_to_str_of_bytes(data_format_identifier)
+        address_and_length_format_identifier = self.convert_int_to_str_of_bytes(address_and_length_format_identifier)
+        memory_address = self.convert_int_to_str_of_bytes(memory_address)
+        memory_size = self.convert_int_to_str_of_bytes(memory_size)
+        request = f'{self.sid.RU:02X} {data_format_identifier} {address_and_length_format_identifier} {memory_address} {memory_size}'
+        return request
+    
+    def transfer_data(self, block_sequence_counter: int, transfer_request_parameter_record: list[int]) -> str:
+        """service is used by the client to transfer data either from the client to the server (download) or from the server to the client (upload).
+        Check ISO 14229 doc for more information about service.
+
+        Args:
+            block_sequence_counter (int): parameter value starts at 0x01 with the first TransferData request that follows the RequestDownload (0x34) or RequestUpload (0x35) service.
+            transfer_request_parameter_record (list[int] | None, optional): parameter record contains parameter(s) which are required by the server to support the transfer of data. Defaults to None.
+
+        Returns:
+            str: complete request in string of bytes with space between each byte.
+        """        
+        block_sequence_counter = self.convert_int_to_str_of_bytes(block_sequence_counter)
+        transfer_request_parameter_record = f'{" ".join([f"{value & 0xFF:02X}" for value in transfer_request_parameter_record])}'
+        request = f'{self.sid.TD:02X} {block_sequence_counter} {transfer_request_parameter_record}'
+        return request
+    
+    def request_transfer_exit(self, transfer_request_parameter_record: list[int] | None = None) -> str:
+        """service is used by the client to terminate a data transfer between client and server (upload or download).
+        Check ISO 14229 doc for more information about service.
+
+        Args:
+            transfer_request_parameter_record (list[int] | None, optional): parameter record contains parameter(s), which are required by the server to support the transfer of data. Defaults to None.
+
+        Returns:
+            str: complete request in string of bytes with space between each byte.
+        """
+        if transfer_request_parameter_record is None:
+            request = f'{self.sid.RTE:02X}'
+        else:
+            transfer_request_parameter_record = f'{" ".join([f"{value & 0xFF:02X}" for value in transfer_request_parameter_record])}'
+            request = f'{self.sid.TD:02X} {transfer_request_parameter_record}'
+        return request
+    
+    def request_file_transfer(self, mode_of_operation: int, file_path_and_name_length: int, file_path_and_name: list[int], data_format_identifier:  int | None = None, file_size_parameter_length: int | None = None,
+                              file_size_uncompressed: list[int] | None = None, file_size_compressed: list[int] | None = None) -> str:
+        """service is used by the client to initiate a file data transfer from either the client to the server or from the server to the client (download or upload).
+        Check ISO 14229 doc for more information about service.
+
+        Args:
+            mode_of_operation (int): This data-parameter defines the type of operation to be applied to the file or directory indicated in the filePathAndName parameter.
+            file_path_and_name_length (int): length in byte for the parameter filePath.
+            file_path_and_name (list[int]): Defines the file system location of the server where the file which shall be added, deleted, replaced or read from depending on the parameter modeOfOperation parameter.
+            data_format_identifier (int | None, optional): This data-parameter is a one byte value with each nibble encoded separately.. Defaults to None.
+            file_size_parameter_length (int | None, optional): Defines the length in bytes for both parameters fileSizeUncompressed and fileSizeCompressed. Defaults to None.
+            file_size_uncompressed (list[int] | None, optional): Defines the size of the uncompressed file in bytes. Defaults to None.
+            file_size_compressed (list[int] | None, optional): Defines the size of the compressed file in bytes. Defaults to None.
+
+        Returns:
+            str: complete request in string of bytes with space between each byte.
+        """
+        mode_of_operation = self.convert_int_to_str_of_bytes(mode_of_operation)
+        file_path_and_name_length = self.convert_int_to_str_of_bytes(file_path_and_name_length)
+        file_path_and_name = f'{" ".join([f"{value & 0xFF:02X}" for value in file_path_and_name])}'
+        data_format_identifier = f'{data_format_identifier & 0xFF:02X}'
+        file_size_parameter_length = f'{file_size_parameter_length & 0xFF:02X}'
+        file_size_uncompressed = f'{" ".join([f"{value & 0xFF:02X}" for value in file_size_uncompressed])}'
+        file_size_compressed = f'{" ".join([f"{value & 0xFF:02X}" for value in file_size_compressed])}'
+        request = f'{self.sid.RFT:02X} {mode_of_operation} {file_path_and_name_length} {file_path_and_name} {data_format_identifier} {file_size_parameter_length} {file_size_uncompressed} {file_size_compressed}'
+        return request
+    
+    def convert_int_to_str_of_bytes(self, integer_value: int) -> str:
+        number_of_bytes = round(integer_value.bit_length() / 8)
+        hex_str = ' '.join([f'{val:02X}' for val in integer_value.to_bytes(number_of_bytes)])
+        return hex_str
