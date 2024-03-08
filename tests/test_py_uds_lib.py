@@ -1,6 +1,6 @@
 from time import sleep as wait
 from src.py_uds_lib import PyUdsLib
-from src.py_uds_lib_utils.dummy_ecu import ClientEcu
+from src.py_uds_lib_utils.dummy_ecu import UdsClient
 
 uds_inst = PyUdsLib()
 uds_services = uds_inst.diag_services
@@ -18,10 +18,10 @@ def test_importing():
     uds_inst.send_diag_request(req)
 
 def test_dummy_ecu():
-    client = ClientEcu()
+    client = UdsClient()
     for _ in range(5):
-        client.send_diagnostic_request([0x02, 0x10, 0x01, 0, 0, 0, 0, 0])
-        client.send_diagnostic_request([0x02, 0x11, 0x00, 0, 0, 0, 0, 0])
-        client.send_diagnostic_request([0x02, 0x3E, 0x00, 0, 0, 0, 0, 0])
+        client.send_request([0x02, 0x10, 0x01, 0, 0, 0, 0, 0])
+        client.send_request([0x02, 0x11, 0x00, 0, 0, 0, 0, 0])
+        client.send_request([0x02, 0x3E, 0x00, 0, 0, 0, 0, 0])
         wait(1)
     client.stop()

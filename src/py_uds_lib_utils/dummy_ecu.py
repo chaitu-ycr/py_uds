@@ -1,7 +1,7 @@
 import can
 from time import sleep as wait
 
-class ServerEcu:
+class UdsServer:
     def __init__(self, bus_interface='kvaser', channel_name='0', bitrate=500000) -> None:
         self.tx_id = 0xFA
         self.rx_id = 0xFB
@@ -50,7 +50,7 @@ class ServerEcu:
         self._shutdown_bus()
     
 
-class ClientEcu:
+class UdsClient:
     def __init__(self, bus_interface='kvaser', channel_name='1', bitrate=500000) -> None:
         self.tx_id = 0xFB
         self.rx_id = 0xFA
@@ -69,7 +69,7 @@ class ClientEcu:
     def _shutdown_bus(self):
         self._bus.shutdown()
     
-    def send_diagnostic_request(self, request_data: list, response_timeout = 3.0) -> list:
+    def send_request(self, request_data: list, response_timeout = 3.0) -> list:
         final_req_data = [0 for _ in range(8)]
         for i in range(len(request_data)):
             final_req_data[i] = request_data[i]
@@ -81,5 +81,5 @@ class ClientEcu:
 
 
 if __name__ == '__main__':
-    server = ServerEcu()
+    server = UdsServer()
     server.start()
