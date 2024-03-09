@@ -35,6 +35,8 @@ class Sid:
         self.transfer_data = self.TD = 0x36
         self.request_transfer_exit = self.RTE = 0x37
         self.request_file_transfer = self.RFT = 0x38
+        # Negative Response
+        self.negative_response = self.NR = 0x7F
 
 
 class Sfid:
@@ -425,7 +427,7 @@ class Services:
         data_record = " ".join([f"{value & 0xFF:02X}" for value in data_record])
         request = f'{self.sid.WMBA:02X} {address_and_length_format_identifier} {memory_address} {memory_size} {data_record}'
         return request
-    
+
     # Stored data transmission
     def clear_diagnostic_information(self, group_of_dtc: int) -> str:
         """service is used by the client to clear diagnostic information in one or multiple servers memory.
@@ -440,7 +442,7 @@ class Services:
         group_of_dtc = self.convert_int_to_str_of_bytes(group_of_dtc)
         request = f'{self.sid.CDTCI:02X} {group_of_dtc}'
         return request
-    
+
     def read_dtc_information(self, report_type: int, remaining_arguments_list: list[int]) -> str:
         """service allows a client to read the status of server resident Diagnostic Trouble Code (DTC) information from any server, or group of servers within a vehicle.
         Check ISO 14229 doc for more information about service.
@@ -456,7 +458,7 @@ class Services:
         remaining_arguments_list = " ".join([f"{value & 0xFF:02X}" for value in remaining_arguments_list])
         request = f'{self.sid.RDTCI:02X} {report_type} {remaining_arguments_list}'
         return request
-    
+
     # Input Output control
     def input_output_control_by_identifier(self, data_identifier: int, control_option_record: list[int], control_enable_mask_record: list[int] | None = None) -> str:
         """service is used by the client to substitute a value for an input signal, internal server function and/or force control to a value for an output (actuator) of an electronic system.
@@ -475,7 +477,7 @@ class Services:
         control_enable_mask_record = '' if control_enable_mask_record is None else f'{" ".join([f"{value & 0xFF:02X}" for value in control_enable_mask_record])}'
         request = f'{self.sid.IOCBI:02X} {data_identifier} {control_option_record} {control_enable_mask_record}'
         return request
-    
+
     # Remote activation of routine
     def routine_control(self, routine_control_type: int, routine_identifier: int, routine_control_option_record: list[int] | None = None) -> str:
         """service is used by the client to execute a defined sequence of steps and obtain any relevant results.
@@ -494,7 +496,7 @@ class Services:
         routine_control_option_record = '' if routine_control_option_record is None else f'{" ".join([f"{value & 0xFF:02X}" for value in routine_control_option_record])}'
         request = f'{self.sid.RC:02X} {routine_control_type} {routine_identifier} {routine_control_option_record}'
         return request
-    
+
     # Upload download
     def request_download(self, data_format_identifier: int, address_and_length_format_identifier: int, memory_address: int, memory_size: int) -> str:
         """service is used by the client to initiate a data transfer from the client to the server.
@@ -515,7 +517,7 @@ class Services:
         memory_size = self.convert_int_to_str_of_bytes(memory_size)
         request = f'{self.sid.RD:02X} {data_format_identifier} {address_and_length_format_identifier} {memory_address} {memory_size}'
         return request
-    
+
     def request_upload(self, data_format_identifier: int, address_and_length_format_identifier: int, memory_address: int, memory_size: int) -> str:
         """service is used by the client to initiate a data transfer from the server to the client.
         Check ISO 14229 doc for more information about service.
@@ -535,7 +537,7 @@ class Services:
         memory_size = self.convert_int_to_str_of_bytes(memory_size)
         request = f'{self.sid.RU:02X} {data_format_identifier} {address_and_length_format_identifier} {memory_address} {memory_size}'
         return request
-    
+
     def transfer_data(self, block_sequence_counter: int, transfer_request_parameter_record: list[int]) -> str:
         """service is used by the client to transfer data either from the client to the server (download) or from the server to the client (upload).
         Check ISO 14229 doc for more information about service.
@@ -546,12 +548,12 @@ class Services:
 
         Returns:
             str: complete request in string of bytes with space between each byte.
-        """        
+        """
         block_sequence_counter = self.convert_int_to_str_of_bytes(block_sequence_counter)
         transfer_request_parameter_record = f'{" ".join([f"{value & 0xFF:02X}" for value in transfer_request_parameter_record])}'
         request = f'{self.sid.TD:02X} {block_sequence_counter} {transfer_request_parameter_record}'
         return request
-    
+
     def request_transfer_exit(self, transfer_request_parameter_record: list[int] | None = None) -> str:
         """service is used by the client to terminate a data transfer between client and server (upload or download).
         Check ISO 14229 doc for more information about service.
@@ -568,7 +570,7 @@ class Services:
             transfer_request_parameter_record = f'{" ".join([f"{value & 0xFF:02X}" for value in transfer_request_parameter_record])}'
             request = f'{self.sid.TD:02X} {transfer_request_parameter_record}'
         return request
-    
+
     def request_file_transfer(self, mode_of_operation: int, file_path_and_name_length: int, file_path_and_name: list[int], data_format_identifier:  int | None = None, file_size_parameter_length: int | None = None,
                               file_size_uncompressed: list[int] | None = None, file_size_compressed: list[int] | None = None) -> str:
         """service is used by the client to initiate a file data transfer from either the client to the server or from the server to the client (download or upload).
@@ -595,8 +597,15 @@ class Services:
         file_size_compressed = f'{" ".join([f"{value & 0xFF:02X}" for value in file_size_compressed])}'
         request = f'{self.sid.RFT:02X} {mode_of_operation} {file_path_and_name_length} {file_path_and_name} {data_format_identifier} {file_size_parameter_length} {file_size_uncompressed} {file_size_compressed}'
         return request
-    
+
     def convert_int_to_str_of_bytes(self, integer_value: int) -> str:
         number_of_bytes = round(integer_value.bit_length() / 8)
         hex_str = ' '.join([f'{val:02X}' for val in integer_value.to_bytes(number_of_bytes)])
         return hex_str
+
+
+class Nrc:
+    def __init__(self) -> None:
+        self.sub_function_not_supported = self.SFNS = 0x12
+        self.incorrect_message_length_or_invalid_format = self.IMLOIF = 0x13
+        self.conditions_notCorrect = self.CNC = 0x22
