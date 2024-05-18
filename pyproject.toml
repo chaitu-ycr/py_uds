@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "py_uds_lib"
-version = "0.0.4"
+version = "0.0.5"
 description = "Python UDS Library"
 authors = ["chaitu-ycr <chaitu.ycr@gmail.com>"]
 license = "LICENSE"
@@ -17,14 +17,10 @@ classifiers = [
 ]
 packages = [
     { include = "py_uds*.py", from = "src" },
-    { include = "py_uds_lib_utils/*.py", from = "src"},
 ]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-dash = "^2.15.0"
-faker = "^23.2.1"
-pandas = "^2.2.1"
 cantools = "^39.4.4"
 odxtools = "^6.6.1"
 python-can = "^4.3.1"
