@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "py_uds_lib"
 version = "0.0.5"
-description = "Python UDS Library"
+description = "Python package for creating UDS requests"
 authors = ["chaitu-ycr <chaitu.ycr@gmail.com>"]
 license = "LICENSE"
 readme = "README.md"

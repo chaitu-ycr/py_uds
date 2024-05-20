@@ -1,6 +1,6 @@
 site_name: py_uds_lib
 site_url: https://chaitu-ycr.github.io/py_uds_lib/
-site_description: Python UDS Library
+site_description: Python package for creating UDS requests
 site_author: chaitu-ycr
 
 repo_name: chaitu-ycr/py_uds_lib
